@@ -6,7 +6,7 @@ module Doorkeeper
       if pre_auth.authorizable?
         if skip_authorization? || matching_token?
           auth = authorization.authorize
-          redirect_to auth.redirect_uri
+          redirect_to auth.redirect_uri, allow_other_host: true
         else
           render :new
         end
@@ -34,7 +34,7 @@ module Doorkeeper
 
     def redirect_or_render(auth)
       if auth.redirectable?
-        redirect_to auth.redirect_uri
+        redirect_to auth.redirect_uri, allow_other_host: true
       else
         render json: auth.body, status: auth.status
       end
